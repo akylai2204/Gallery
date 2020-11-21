@@ -13,9 +13,8 @@ def index():
      page = excel["Лист1"]
      for row in page:
           url = row[0].value
-          description = row[1].value
           title = row[2].value
-          lst = [title, description, url]
+          lst = [title, url]
           images.append(lst)
 
      return render_template("index.html", images=images)
@@ -38,3 +37,10 @@ def reciever():
      excel.save("gallery.xlsx")
 
      return render_template("form.html")
+
+@app.route("/details/<number>")
+def details(number):
+     excel = load_workbook("gallery.xlsx")
+     page = excel["Лист1"]
+     lst = page[str(number)]
+     return render_template("details.html", lst=lst)
